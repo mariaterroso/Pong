@@ -15,7 +15,7 @@ public class Paddle : MonoBehaviour
 
     [SerializeField]
     KeyCode downKey = KeyCode.DownArrow;
-    
+
     // Update is called once per frame
     void Update()
     {
@@ -30,7 +30,7 @@ public class Paddle : MonoBehaviour
         /*
          * Mover a raquete
          */
-        if(Input.GetKey(upKey))
+        if (Input.GetKey(upKey))
         {
             //transform.position =
             //    transform.position + velocidade * Vector3.up;
