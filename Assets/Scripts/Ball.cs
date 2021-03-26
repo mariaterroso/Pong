@@ -1,17 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    [SerializeField] float velocidade = 5f;
+    [SerializeField]
+    float velocidade = 5f;
     bool bolaFoiLancada = false;
-    float temporizador = 0.0f;
-    float tempoDeEspera = 2.0f;
-    bool velocidadeDefinida = false;
 
+    [SerializeField]
+    float tempoDeEspera = 2f;
+
+    float tempoDecorrido = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -23,36 +23,33 @@ public class Ball : MonoBehaviour
         //{
         //    GetComponent<Rigidbody2D>().velocity = velocidade * Vector2.left;
         //}
-
-        //lançar a bola
-        //GetComponent<Rigidbody2D>().velocity = velocidade * Random.insideUnitCircle;
+        Reset();
     }
 
-    // Update is called once per frame - 10 FPS - a cada segundo chama o Update() 10 vezes
+
+
+    // Update is called once per frame
     void Update()
     {
-        temporizador += Time.deltaTime; // vai buscar a informação de tempo ao Unity Engine
-
         if (bolaFoiLancada == false)
         {
-            GetComponent<Rigidbody2D>().Sleep(); // adormecer/parar a bola
+            tempoDecorrido += Time.deltaTime;
 
-            // verificamos se o temporizador já chegou aos 2 segundos
-            if (temporizador > tempoDeEspera)
+            if (tempoDecorrido >= tempoDeEspera)
             {
+                GetComponent<Rigidbody2D>().velocity = velocidade * Random.onUnitSphere;
                 bolaFoiLancada = true;
-
-                temporizador -= tempoDeEspera;
-            }
-
-        }
-        else
-        {
-            if (velocidadeDefinida == false)
-            {
-                GetComponent<Rigidbody2D>().velocity = velocidade * Random.insideUnitCircle; // meter a bola a andar
-                velocidadeDefinida = true; // só definir a velocidade uma vez
             }
         }
     }
+
+    public void Reset()
+    {
+        transform.position = Vector3.zero;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+        bolaFoiLancada = false;
+        tempoDecorrido = 0f;
+    }
+
 }
